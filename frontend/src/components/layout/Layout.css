@@ -1,0 +1,102 @@
+.layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: var(--sidebar-width);
+  transition: margin-left var(--transition-normal);
+  background-color: var(--bg-primary);
+}
+
+.main-content.sidebar-collapsed {
+  margin-left: var(--sidebar-collapsed);
+}
+
+.content {
+  flex: 1;
+  padding: var(--spacing-lg);
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: var(--bg-primary);
+  position: relative;
+}
+
+/* Animaciones de entrada para las páginas */
+.content>* {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Overlay para sidebar mobile */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  /* El contenido nunca se desplaza en móvil/tablet */
+  .main-content {
+    margin-left: 0 !important;
+  }
+
+  /* Sidebar en modo overlay */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: var(--sidebar-width);
+    background: var(--bg-secondary);
+    box-shadow: var(--shadow-lg);
+    z-index: 1001;
+    transition: left var(--transition-normal);
+  }
+
+  .sidebar.sidebar-open {
+    left: 0;
+  }
+
+  /* Overlay oscuro */
+  .sidebar-overlay {
+    display: block;
+  }
+
+  .content {
+    padding: var(--spacing-sm);
+  }
+}
