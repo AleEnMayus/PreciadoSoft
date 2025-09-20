@@ -24,10 +24,8 @@ Aplicación de escritorio para la gestión integral de farmacias con facturació
 ## Instalación
 
 ```bash
-git clone https://github.com/username/preciadosoft.git
+git clone https://github.com/AleEnMayus/preciadosoft.git
 cd preciadosoft
-npm install
-npm run dev
 ```
 
 ## Scripts
