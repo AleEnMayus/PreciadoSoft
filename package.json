@@ -1,0 +1,153 @@
+{
+  "name": "preciado-soft",
+  "version": "1.0.0",
+  "description": "Sistema de gestión integral para Droguería Preciado - Facturación, inventario, documentos y control operacional",
+  "main": "electron/main.js",
+  "homepage": "./",
+  "private": true,
+  "author": {
+    "name": "Tu Nombre",
+    "email": "tu.email@ejemplo.com"
+  },
+  "license": "UNLICENSED",
+  "keywords": [
+    "drogueria",
+    "farmacia",
+    "inventario",
+    "facturacion",
+    "electron",
+    "desktop"
+  ],
+  "scripts": {
+    "// Desarrollo": "",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\" \"wait-on http://localhost:3000 http://localhost:3001 && npm run electron:dev\"",
+    "dev:frontend": "cd frontend && npm start",
+    "dev:backend": "cd backend && npm run dev",
+    "electron:dev": "cross-env NODE_ENV=development electron .",
+    "electron:pack": "electron-builder --dir",
+    "electron:dist": "electron-builder",
+    "// Construcción": "",
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "postbuild": "electron-builder",
+    "// Empaquetado": "",
+    "pack": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:linux": "npm run build && electron-builder --linux",
+    "// Instalación": "",
+    "postinstall": "npm run install:all",
+    "install:all": "npm run install:frontend && npm run install:backend",
+    "install:frontend": "cd frontend && npm install",
+    "install:backend": "cd backend && npm install",
+    "// Limpieza": "",
+    "clean": "rimraf dist build frontend/build backend/dist node_modules/*/node_modules",
+    "clean:all": "npm run clean && rimraf frontend/node_modules backend/node_modules",
+    "// Base de datos": "",
+    "db:setup": "cd backend && npm run db:migrate",
+    "db:seed": "cd backend && npm run db:seed",
+    "db:reset": "cd backend && npm run db:reset",
+    "// Pruebas": "",
+    "test": "npm run test:frontend && npm run test:backend",
+    "test:frontend": "cd frontend && npm test",
+    "test:backend": "cd backend && npm test",
+    "// Utilidades": "",
+    "start": "electron .",
+    "prestart": "npm run build",
+    "lint": "eslint electron/ --ext .js",
+    "format": "prettier --write electron/**/*.js"
+  },
+  "dependencies": {
+    "electron-log": "^4.4.8",
+    "electron-store": "^8.2.0",
+    "electron-updater": "^6.1.4"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.1",
+    "cross-env": "^7.0.3",
+    "electron": "^26.2.1",
+    "electron-builder": "^24.6.4",
+    "electron-devtools-installer": "^3.2.0",
+    "eslint": "^8.49.0",
+    "prettier": "^3.0.3",
+    "rimraf": "^5.0.1",
+    "wait-on": "^7.0.1"
+  },
+  "build": {
+    "appId": "com.preciado.soft",
+    "productName": "PreciadoSoft",
+    "copyright": "Copyright © 2025 Droguería Preciado",
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    },
+    "files": [
+      "electron/**/*",
+      "frontend/build/**/*",
+      "backend/dist/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "database/schema.sql",
+        "to": "database/"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icons/icon.ico",
+      "publisherName": "Droguería Preciado",
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "PreciadoSoft"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/icons/icon.icns",
+      "category": "public.app-category.business"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "assets/icons/icon.png",
+      "category": "Office"
+    }
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AleEnMayus/preciado-soft.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AleEnMayus/preciado-soft/issues"
+  }
+}
